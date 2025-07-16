@@ -11,9 +11,11 @@ workspace "Hazel"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
-IncludeDir["GLFW"] = "Hazel/vendor/GLFW/include"
+IncludeDir["GLFW"] = "Hazel/vendor/glfw/include"
+IncludeDir["GLAD"] = "Hazel/vendor/glad/include"
 
-include "Hazel/vendor/GLFW"
+include "Hazel/vendor/glfw"
+include "Hazel/vendor/glad"
 
 project "Hazel"
 	location "Hazel"
@@ -36,12 +38,14 @@ project "Hazel"
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
-		"%{IncludeDir.GLFW}"
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.GLAD}",
 	}
 
 	links
 	{
 		"GLFW",
+		"GLAD",
 		"opengl32.lib",
 		"dwmapi.lib"
 	}
@@ -55,7 +59,8 @@ project "Hazel"
 	defines
 	{
 		"HZ_PLATFORM_WINDOWS",
-		"HZ_BUILD_DLL"
+		"HZ_BUILD_DLL",
+		"GLFW_INCLUDE_NONE"
 	}
 
 	postbuildcommands
